@@ -8,3 +8,10 @@
 
                     System.Windows.Forms.MessageBox.Show("Files found: " + files.Length.ToString(), "Message");
                 }
+
+
+
+                    InitializeComponent();
+            Filer.go();
+            OpenFileDialog fd =new OpenFileDialog();
+       

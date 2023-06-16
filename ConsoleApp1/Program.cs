@@ -1,4 +1,1 @@
-﻿
-
-    //FileObject.Test();
-    Filer.go();
+﻿Filer.go();
