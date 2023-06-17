@@ -3,12 +3,10 @@
 ################################################################################
 
 /ConsoleApp1/obj
-/ConsoleApp1/bin/Debug/net6.0
-/WpfApp1/.vs/ProjectEvaluation
-/WpfApp1/.vs/WpfApp1/DesignTimeBuild
-/WpfApp1/.vs/WpfApp1/FileContentIndex
-/WpfApp1/.vs/WpfApp1/v17
-/WpfApp1/bin/Debug/net6.0-windows
-/WpfApp1/obj/Debug/net6.0-windows
+/ConsoleApp1/bin
+/WpfApp1/.vs
+
+/WpfApp1/bin
+
 /WpfApp1/obj
 /.vs

@@ -2,25 +2,34 @@
 public class FileObject
 {
 
-    private String fullpath_;
-
-    public FileObject(string fullpath_)
+    private String fullpath;
+    private long length;
+    public FileObject(string fullpath)
     {
-        this.fullpath_ = fullpath_;
+        this.fullpath = fullpath;
+        this.length= new FileInfo(fullpath).Length;
     }
 
     public String Fullpath
     {
         get
         {
-            return fullpath_;
+            return fullpath;
         }
+    }
+    public String FileNameWE
+    {
+        get
+        {
+            return Path.GetFileNameWithoutExtension(fullpath);
+        }
+
     }
     public String FileName
     {
         get
         {
-            return Path.GetFileNameWithoutExtension(fullpath_);
+            return Path.GetFileName(fullpath);
         }
 
     }
@@ -28,13 +37,13 @@ public class FileObject
     {
         get
         {
-            return Path.GetExtension(fullpath_);
+            return Path.GetExtension(fullpath);
         }
     }
 
     public long Length
     {
-        get { return new FileInfo(fullpath_).Length; }
+        get { return length; }
     }
     public override string ToString()
     {

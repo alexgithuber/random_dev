@@ -17,7 +17,7 @@ using System.Globalization;
 
         public static void toc()
         {
-            Console.WriteLine(string.Format(NumberFormatInfo.InvariantInfo, "Elapsed time {0}s", sw.Elapsed.TotalSeconds));// sw.Elapsed.TotalSeconds);
+            Console.WriteLine(string.Format(NumberFormatInfo.InvariantInfo, "Elapsed time: {0}s", sw.Elapsed.TotalSeconds));// sw.Elapsed.TotalSeconds);
         }
         public static bool elapsed(double minimumtime)
         {

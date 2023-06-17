@@ -54,3 +54,22 @@
         {
             Console.WriteLine("dup|{0}", name);
         }*/
+
+           /*<StackPanel Margin="3,3,3,3">
+        <Button Name="b1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="13" Margin="0,5,10,5"/> 
+        
+        <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="F" Text="dsaasdsdasaasddsa" Name="tb1"/>
+    </StackPanel>
+
+
+
+
+           <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label>Names</Label>
+        <TextBox Grid.Row="1" VerticalAlignment="Stretch" Name="tb1" AcceptsReturn="True" VerticalScrollBarVisibility="Visible"/>
+        <Button Content="Button" Grid.Row="0" VerticalAlignment ="Center" HorizontalAlignment="Center" Margin="3,3,3,3"/>
+        <Button Content="Button" Grid.Row="2" VerticalAlignment ="Center" HorizontalAlignment="Center" Margin="3,3,3,3"/>

@@ -1,5 +1,4 @@
 ﻿
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,66 +7,131 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml;
 using System.Threading;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
+using System.Timers;
+
 namespace WpfApp1
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    ///
+
     public partial class MainWindow : Window
     {
+        private System.Timers.Timer? timer;
+        CancellationTokenSource? ct_source;
+
+
         public MainWindow()
         {
             InitializeComponent();
-            //Filer.go();
-            //new OpenFileDialog().ShowDialog();
-            tb1.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+
 
             var progress = new Progress<string>();
-            progress.ProgressChanged += (s, message) => tb1.AppendText(message);
+            progress.ProgressChanged += (s, message) => {
+                tb1.AppendText(message);
+                //tb1.ScrollToEnd();
+            };
             Console.SetOut(new ControlWriter(progress));
         }
 
+//}
 
-        //+=(s,message)=>{
-        //   tb1.Text+=message; 
-        //}
-        //}
-
-
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+       
+  
+        private async void BStart_Click(object sender, RoutedEventArgs e)
         {
+            timer=new System.Timers.Timer();
+            timer.AutoReset = true;
+            timer.Interval = 1000;
+            timer.Enabled = true;
+            timer.Elapsed += delegate (Object? source , ElapsedEventArgs ign) {
+                this.Dispatcher.Invoke(() =>
+                BStart.Content = String.Format("move {0}/{1}", Filer.countFile, Filer.totalFiles));  
+            };
+            if (!(Directory.Exists(SourceDirectory.Text) && Directory.Exists(TargetDirectory.Text)))
+            {
+                Console.WriteLine("One or both directories do not exist");
+                return; }
+            ct_source = new CancellationTokenSource();
+            tb1.Clear();
+            BStart.IsEnabled = false;
+
+            {
+                bool kDS= keepDirectoryStructure.IsChecked.GetValueOrDefault();
+                bool bN= byName.IsChecked.GetValueOrDefault();
+                bool Sim= Simulation.IsChecked.GetValueOrDefault();
+                var sd = SourceDirectory.Text;
+                var td = TargetDirectory.Text;
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            Filer.ListFile(sd, td, kDS, bN, Sim, ct_source.Token);
+                        }
+                        catch (AggregateException)                            //Thread.Sleep(10);
+                        {
+                           
+                            Console.WriteLine("Task was cancelled");
+                           
+                        }
+                        this.Dispatcher.Invoke(() => tb1.ScrollToEnd());
+                        this.Dispatcher.Invoke(() => BStart.IsEnabled = true);
+                        this.Dispatcher.Invoke(() => BStart.Content="Start");
+                        timer.Enabled = false;
+                    });
+                
+
+            }
            
-            tb1.ScrollToEnd();
-            var task=Task.Run(() => {
-                this.Dispatcher.Invoke(() => b1.IsEnabled = false);
-                 Filer.go();
-                this.Dispatcher.Invoke(() => b1.IsEnabled = true);
-                });
+        }
+        private void BStop_Click(object sender, RoutedEventArgs e)
+        {
+            
+            ct_source?.Cancel();
+   
+        }
+
+        private void copy_log(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(tb1.Text);
+        }
+
+        private void SourceDirectoryB_Click(object sender, RoutedEventArgs e)
+        {
+                System.Windows.Forms.FolderBrowserDialog folder = new System.Windows.Forms.FolderBrowserDialog();
+                if (folder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    SourceDirectory.Text = folder.SelectedPath;
+                }
           
+          //        ;
             
         }
+
+        private void TargetDirectoryB_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog folder = new System.Windows.Forms.FolderBrowserDialog();
+            if (folder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                TargetDirectory.Text = folder.SelectedPath;
+            }
+        }
+
+        
     }
 
     public class ControlWriter : TextWriter
     {
         private IProgress<string> progress;
-        private StringBuilder sb;
-        int printed = 0;
+ 
+      
         public ControlWriter(IProgress<string> progress)
         {
             this.progress = progress;
-            sb = new StringBuilder();
+     
         }
 
         public override void Write(char value)
@@ -81,10 +145,7 @@ namespace WpfApp1
                 progress.Report(value);
             }
         }
-        public override string ToString()
-        {
-            return sb.ToString();
-        }
+   
         public override Encoding Encoding
         {
             get { return Encoding.ASCII; }

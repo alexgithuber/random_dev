@@ -5,13 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowState="Maximized">
-    <Grid HorizontalAlignment="Center" Height="348" Margin="0,72,0,0" VerticalAlignment="Top" Width="780" RenderTransformOrigin="0.503,0.514">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="58*"/>
-            <ColumnDefinition Width="137*"/>
-        </Grid.ColumnDefinitions>
-        <TextBox x:Name="tb1" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" Width="548" Height="348"/>
-        <Button x:Name="b1" Content="Button" HorizontalAlignment="Left" Height="38" Margin="10,10,0,0" VerticalAlignment="Top" Width="98" Click="Button_Click_1"/>
+        Title="MainWindow" Height="545" Width="786">
+
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--string SourceDirectory, 
+        string TargetDirectory, 
+        bool keepDirectoryStructure, 
+        bool byName, -->
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+               <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+
+            </Grid.ColumnDefinitions>
+
+            <TextBox Name="SourceDirectory" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="SourceDirectory" Margin="3,3,-1,3" />
+            <TextBox Name="TargetDirectory" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="TargetDirectory" Margin="3,3,-1,3" />
+            <Button Name="SourceDirectoryB" Content="..." Grid.Row="0" Grid.Column="1" VerticalAlignment ="Center" HorizontalAlignment="Center" Margin="0,3,0,3" Click="SourceDirectoryB_Click" />
+            <Button Name="TargetDirectoryB" Content="..." Grid.Row="1" Grid.Column="1" VerticalAlignment ="Center" HorizontalAlignment="Center" Margin="0,3,0,3" Click="TargetDirectoryB_Click" />
+            <CheckBox Name="keepDirectoryStructure" Grid.Row ="0" Grid.Column="2" Grid.ColumnSpan="2"  Content="keep Directory Structure" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3" IsChecked="True"/>
+            <CheckBox  Name="byName" Grid.Row ="1" Grid.Column="2"  Content="by Name" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3" IsChecked="True"/>
+            <CheckBox  Name="Simulation" Grid.Row ="1" Grid.Column="3"  Content="Simulation" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3" IsChecked="True"/>
+
+            <Button Name="BStart" Content="Start" Grid.Row="0" Grid.RowSpan="1" Grid.Column="4" VerticalAlignment ="Stretch" HorizontalAlignment="Stretch" Margin="3" ButtonBase.Click="BStart_Click"/>
+
+            <Button Name="BStop" Content="Stop" Grid.Row="1" Grid.RowSpan="1" Grid.Column="4" VerticalAlignment ="Stretch" HorizontalAlignment="Stretch" Margin="3" ButtonBase.Click="BStop_Click"/>
+
+        </Grid>
+    <TextBox Grid.Row="1"  VerticalAlignment="Stretch" Name="tb1" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Margin="3"/>
+
+        <Button Content="Copy Log" Grid.Row="2"  VerticalAlignment ="Center" HorizontalAlignment="Center" Margin="3" Click="copy_log"/>
     </Grid>
+
 </Window>
