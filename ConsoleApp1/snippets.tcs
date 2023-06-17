@@ -15,3 +15,42 @@
             Filer.go();
             OpenFileDialog fd =new OpenFileDialog();
        
+
+
+
+          var dubList = byName ? dubByName : dubByLenght;
+        int count = 1;
+        dubList.ForEach(SourceFile =>
+        {
+
+            string TargetFile = SourceFile.FileName + "_" + count.ToString() + SourceFile.FileExt;
+            TargetFile.ToString();
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            new FileInfo(TargetFile).Directory.Create();
+            //pragma warning restore CS8602 // Dereference of a possibly null reference. 
+            //Console.WriteLine(SourceFile.Fullpath + "to" + TargetFile);
+            try { File.Copy(SourceFile.Fullpath, TargetFile, true); } catch { Console.WriteLine("File " + SourceFile.Fullpath + "not transfered"); };
+            count++;
+        });
+        Console.WriteLine("moved Files{0}", count);
+        //dupByName_red.ForEach(targetFile => { System.IO.FileInfo("c:\\stuff\\a\\file.txt").Directory.Create(); };// File.Move(elem.Fullpath,TargetDirectory + Path.DirectorySeparatorChar + Path.GetRelativePath(SourceDirectory, elem.Fullpath)});
+
+
+
+        //IEnumerable<int> duplicateItems = from file in FileList where Path.GetExtension(file).Equals("txt") select file.Length;
+
+
+
+        //Console.WriteLine(FileList)
+        /*
+        FileList.ForEach(delegate(string name)
+        {
+            Console.WriteLine( "x|{0}",name);
+        }
+
+
+        Console.WriteLine("doubles {0}",duplicateItems);
+        duplicateItems.ForEach(delegate (string name)
+        {
+            Console.WriteLine("dup|{0}", name);
+        }*/

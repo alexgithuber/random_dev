@@ -1,34 +1,68 @@
-﻿
-using System;
-//using System.Diagnostics;
-using System.IO;
+﻿//using System.Diagnostics;
+using System.Data;
 using static TimeIt;
-using static System.Math;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
-using System.Numerics;
-
 
 public class Filer
-    {
-    public static void go()
+{
+    public static async Task go()
     {   //
-      
-        ListFile();
+        // tagging= group#_elem#_FileName.ext
+        await Task.Run(()=>ListFile(@"C:\Users\alxhb\Desktop\wes", @"C:\Users\alxhb\Desktop\wes2", false, true, true));
+        //ListFile(@"C:\Users\alxhb\Desktop\wes", @"C:\Users\alxhb\Desktop\wes2", false, false, true);
+        //ListFile(@"C:\Users\alxhb\Desktop\wes", @"C:\Users\alxhb\Desktop\wes2", false, false, true);
     }
-    
 
-    public static void ListFile(string SourceDirectory = @"C:\Users\alxhb\Desktop\wes\test", string TargetDirectory = @"C:\Users\alxhb\Desktop\wes2\")
+
+    public static async Task ListFile(string SourceDirectory, string TargetDirectory, bool keepDirectoryStructure, bool byName, bool Simulation)
     {
 
-        
-        Console.WriteLine(SourceDirectory);
-        List<FileObject> FileList;
+        Console.WriteLine("Scanning Files");
         tic();
+        List<FileObject> FileList = ScanFiles(SourceDirectory);
+        toc();
+        Console.WriteLine("total_f Files{0}", FileList.Count);
+        
+                var dubByName = FileList.GroupBy(fo => fo.FileName).Where(go => go.Count() >= 2).OrderBy(go => go.Key);
+                var dubByLenght = FileList.GroupBy(fo => fo.Length).Where(go => go.Count() >= 2).OrderBy(go => go.Key);
+        
+       
+        
+        foreach (var group in dubByLenght.Select((group, i) => new {group,i}))
+        {
+            //Console.WriteLine("#idx{0}: Key:{1} ", group.i, group.group.Key);
+            foreach (var elem in group.group.Select((elem, i) => new { x = elem, i }))
+
+            {
+                await Task.Run(() => DoCopy(elem.x.Fullpath, "tooox"));
+                //Console.WriteLine("\t#idx{0}:{1} {2}", group.i, elem.i,elem.x.Fullpath); 
+              
+            }
+            
+        }
+        Console.WriteLine("Finnished");
+    }
+
+    public static void DoCopy(string source, string target, bool Simulation = true)
+    {
+        int x = 0;
+        if (Simulation) { 
+            Console.WriteLine("sim move file from{0} to {1}", source, target);
+        Thread.Sleep(1); 
+        }
+        else File.Copy(source, target);
+    
+    
+    }
+
+
+    private static List<FileObject> ScanFiles(string SourceDirectory)
+    {
+        List<FileObject> FileList;
         try
-        { FileList = Directory.GetFiles(SourceDirectory, "*", SearchOption.AllDirectories).
+        {
+            FileList = Directory.GetFiles(SourceDirectory, "*", SearchOption.AllDirectories).
             Select(fn => new FileObject(fn)).ToList();
-            Console.WriteLine("total_f Files{0}", FileList.Count);
+
             toc();
 
 
@@ -36,52 +70,13 @@ public class Filer
         catch (Exception ex)
         {
             Console.WriteLine("Exception: " + ex.Message);
-            return;
-            //FileList = new List<FileObject>();
+
+            FileList = new List<FileObject>();
 
         };
-        var dupByName = FileList.GroupBy(fo => fo.FileName).Where(go => go.Count() >= 2).SelectMany(go => go).ToList();
-        var dupByLenght = FileList.GroupBy(fo => fo.Length).Where(go => go.Count() >= 2).SelectMany(go => go).ToList();
-
-
-        ListHelper.WriteLine(FileList);
-        ListHelper.WriteLine(dupByName);
-        ListHelper.WriteLine(dupByLenght);
-   
-        int count = 0;
-        dupByLenght.ForEach(SourceFile => {
-             string TargetFile = SourceFile.FileName+"_"+count.ToString()+ SourceFile.FileExt;
-            TargetFile.ToString();
-            #pragma warning disable CS8602 // Dereference of a possibly null reference.
-            new FileInfo(TargetFile).Directory.Create();
-            #pragma warning restore CS8602 // Dereference of a possibly null reference.
-            Console.WriteLine(SourceFile.Fullpath + "to" + TargetFile);
-            try { File.Copy(SourceFile.Fullpath, TargetFile, true); } catch { Console.WriteLine("File " + SourceFile.Fullpath + "not transfered"); };
-             count++;   
-         });
-        Console.WriteLine("moved Files{0}", count);
-        //dupByName_red.ForEach(targetFile => { System.IO.FileInfo("c:\\stuff\\a\\file.txt").Directory.Create(); };// File.Move(elem.Fullpath,TargetDirectory + Path.DirectorySeparatorChar + Path.GetRelativePath(SourceDirectory, elem.Fullpath)});
-
-
-
-        //IEnumerable<int> duplicateItems = from file in FileList where Path.GetExtension(file).Equals("txt") select file.Length;
-
-
-
-        //Console.WriteLine(FileList)
-        /*
-        FileList.ForEach(delegate(string name)
-        {
-            Console.WriteLine( "x|{0}",name);
-        }
-
-
-        Console.WriteLine("doubles {0}",duplicateItems);
-        duplicateItems.ForEach(delegate (string name)
-        {
-            Console.WriteLine("dup|{0}", name);
-        }*/
+        return FileList;
     }
+}
 
 
 
@@ -90,38 +85,7 @@ public class Filer
 
 
 
-    //public static (List<T>,List<int>) FindDupes<T>(List<T> input)
-    public static List<int> FindDupes<T>(List<T> input)
-        {
-            return new List<int>();// new List<T>();
-
-        }
-        //             Situations:  Same name
-        //             Situation: same size
+    
 
 
 
-
-
-
-
-        static string DisplayFile(FileSystemInfo fsi, int count)
-
-
-        {
-            {
-                //  Assume that this entry is a file.
-                string entryType = "File";
-
-                // Determine if entry is really a directory
-                if ((fsi.Attributes & FileAttributes.Directory) == FileAttributes.Directory)
-                {
-                    entryType = "Directory";
-                }
-                //  Show this entry's type, name, and creation date.
-                return string.Format("{0}: entry {1} ", entryType, fsi.FullName, count);
-            }
-        }
-
-
-    }

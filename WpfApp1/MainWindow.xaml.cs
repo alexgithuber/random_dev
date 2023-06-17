@@ -15,7 +15,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Xml;
+using System.Threading;
+using System.Threading.Tasks;
 namespace WpfApp1
 {
     /// <summary>
@@ -26,18 +28,66 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
-            Filer.go();
-            new OpenFileDialog().ShowDialog();
-    }
+            //Filer.go();
+            //new OpenFileDialog().ShowDialog();
+            tb1.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
 
-       
+            var progress = new Progress<string>();
+            progress.ProgressChanged += (s, message) => tb1.AppendText(message);
+            Console.SetOut(new ControlWriter(progress));
+        }
 
-      
-        private void GoButton(object sender, RoutedEventArgs e)
+
+        //+=(s,message)=>{
+        //   tb1.Text+=message; 
+        //}
+        //}
+
+
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            //var dial=new OpenFileDialog
-            //source = Directory.Exists();
-            //DialogResult dr=MessageBox.Show("You Will move files from {0} to {1}. Do you want to continues")
+           
+            tb1.ScrollToEnd();
+            var task=Task.Run(() => {
+                this.Dispatcher.Invoke(() => b1.IsEnabled = false);
+                 Filer.go();
+                this.Dispatcher.Invoke(() => b1.IsEnabled = true);
+                });
+          
+            
         }
     }
-}
+
+    public class ControlWriter : TextWriter
+    {
+        private IProgress<string> progress;
+        private StringBuilder sb;
+        int printed = 0;
+        public ControlWriter(IProgress<string> progress)
+        {
+            this.progress = progress;
+            sb = new StringBuilder();
+        }
+
+        public override void Write(char value)
+        {
+            progress.Report(value.ToString());
+        }
+
+        public override void Write(string? value)
+        {
+            if (value != null) {
+                progress.Report(value);
+            }
+        }
+        public override string ToString()
+        {
+            return sb.ToString();
+        }
+        public override Encoding Encoding
+        {
+            get { return Encoding.ASCII; }
+        }
+    }
+    }
