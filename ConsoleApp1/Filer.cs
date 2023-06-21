@@ -1,6 +1,11 @@
 ﻿//using System.Diagnostics;
 using System.Data;
+using System.Linq.Expressions;
+using static System.Net.Mime.MediaTypeNames;
 using static TimeIt;
+
+
+
 
 public class Filer
 {
@@ -8,13 +13,22 @@ public class Filer
     public static int totalFiles=-1;
     public static int countFile = 0;
     public static void go()
-    {   //
+    {
         // tagging= group#_elem#_FileName.ext
-        Console.WriteLine("bySize");
-        Task.Run(() => ListFile(@"C:\Users\alxhb\Desktop\wes\test", @"C:\Users\alxhb\Desktop\wes2", keepDirectoryStructure: true, byName: false, Simulation: true));
-
+        /* Console.WriteLine("bySize");
+        Task.Run(() => ListFile(@"C:\Users\alxhb\Desktop\wes\test", @"C:\Users\alxhb\Desktop\wes\test", keepDirectoryStructure: true, byName: false, Simulation: true)).Wait();
+        
         Console.WriteLine("byName");
-        Task.Run(() => ListFile(@"C:\Users\alxhb\Desktop\wes\test", @"C:\Users\alxhb\Desktop\wes2", keepDirectoryStructure: true, byName: true, Simulation: true));
+        Task.Run(() => ListFile(@"C:\Users\alxhb\Desktop\wes\test", @"C:\Users\alxhb\Desktop\wes\test", keepDirectoryStructure: true, byName: true, Simulation: true)).Wait();
+        */
+        tic();
+        Filer.ScanFiles_old(@"C:\Users\alxhb\Desktop\wes");
+        toc();
+        tic();
+        Filer.ScanFiles(@"C:\Users\alxhb\Desktop\wes\test");
+        toc();
+        //ListHelper.WriteLine(x);
+
 
         //ListFile(@"C:\Users\alxhb\Desktop\wes", @"C:\Users\alxhb\Desktop\wes2", false, false, true);
         //ListFile(@"C:\Users\alxhb\Desktop\wes", @"C:\Users\alxhb\Desktop\wes2", false, false, true);
@@ -107,7 +121,7 @@ public class Filer
     }
 
 
-    private static List<FileObject> ScanFiles(string SourceDirectory)
+    private static List<FileObject> ScanFiles_old(string SourceDirectory)
     {
         List<FileObject> FileList;
         try
@@ -120,28 +134,37 @@ public class Filer
         }
         catch (Exception ex)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Exception: " + ex.Message);
-
+            Console.ResetColor();
             FileList = new List<FileObject>();
 
         };
         return FileList;
     }
-    private static List<FileObject> ScanFilesSafe(string SourceDirectory, bool recursive = true)
+    private static List<FileObject> ScanFiles(string SourceDirectory, bool recursive = true)
     {
         List<FileObject> FileList;
+        List<string> DirectoryList;
         try
         {
-            FileList = Directory.GetFiles(SourceDirectory, "*", SearchOption.AllDirectories).
-            Select(fn => new FileObject(fn)).ToList();
 
+            FileList = Directory.GetFiles(SourceDirectory)
+                .Select(fn => new FileObject(fn)).ToList();
+
+            DirectoryList = Directory.GetDirectories(SourceDirectory).ToList();
+            foreach (var directory in DirectoryList)
+            {
+                FileList.AddRange(ScanFiles(directory, true));
+            }
 
 
         }
         catch (Exception ex)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Exception: " + ex.Message);
-
+            Console.ResetColor();
             FileList = new List<FileObject>();
 
         };
