@@ -397,5 +397,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 
 #manual
-**/Properties/*
+
 AssemblyInfo.cs
