@@ -7,12 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Program.cs_" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Program.cs_" />
-  </ItemGroup>
-
 </Project>

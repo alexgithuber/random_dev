@@ -127,6 +127,26 @@ public class Filer
         };
         return FileList;
     }
+    private static List<FileObject> ScanFilesSafe(string SourceDirectory, bool recursive = true)
+    {
+        List<FileObject> FileList;
+        try
+        {
+            FileList = Directory.GetFiles(SourceDirectory, "*", SearchOption.AllDirectories).
+            Select(fn => new FileObject(fn)).ToList();
+
+
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Exception: " + ex.Message);
+
+            FileList = new List<FileObject>();
+
+        };
+        return FileList;
+    }
 }
 
 
