@@ -27,8 +27,10 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
-
-
+            #if DEBUG
+                SourceDirectory.Text = @"C:\Users\alxhb\Desktop\wes2";
+                TargetDirectory.Text = @"C:\Users\alxhb\Desktop\wes";
+            #endif
             var progress = new Progress<string>();
             progress.ProgressChanged += (s, message) => {
                 tb1.AppendText(message);
