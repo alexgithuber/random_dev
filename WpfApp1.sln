@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSweep", "FileSweep\File
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandFileOpen", "RandFileOpen\RandFileOpen.csproj", "{8F0994AE-6FD9-43CE-A2FA-F29EA7C4FBED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFLib", "WPFLib\WPFLib.csproj", "{F52D6060-EE2D-4181-8655-B7DB4F8072D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFLib", "WPFLib\WPFLib.csproj", "{782312A9-1F8C-44D0-AD03-6BC3FAE08263}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,10 @@ Global
 		{8F0994AE-6FD9-43CE-A2FA-F29EA7C4FBED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F0994AE-6FD9-43CE-A2FA-F29EA7C4FBED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F0994AE-6FD9-43CE-A2FA-F29EA7C4FBED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F52D6060-EE2D-4181-8655-B7DB4F8072D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F52D6060-EE2D-4181-8655-B7DB4F8072D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F52D6060-EE2D-4181-8655-B7DB4F8072D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F52D6060-EE2D-4181-8655-B7DB4F8072D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{782312A9-1F8C-44D0-AD03-6BC3FAE08263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{782312A9-1F8C-44D0-AD03-6BC3FAE08263}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{782312A9-1F8C-44D0-AD03-6BC3FAE08263}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{782312A9-1F8C-44D0-AD03-6BC3FAE08263}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

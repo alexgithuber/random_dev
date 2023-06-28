@@ -23,7 +23,8 @@ namespace WPFLib
             set
             {
                 folder = value;
-                DC2.Text = value;
+                if (DC2.Text != value)
+                { DC2.Text = value; };
                
                 if (System.IO.Directory.Exists(value))
                 {
@@ -49,8 +50,7 @@ namespace WPFLib
 
         private void DC_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Console.WriteLine("textChanged");
-            e.Handled = true;
+            Folder = DC2.Text;
         
         }
         //public string xFolder { Get; Set };

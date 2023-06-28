@@ -221,7 +221,7 @@ namespace FileSweep
                         PressNum((int)k_i - (int)Key.D0);
                     break;
                 }
-            e.Handled = true;
+            e.Handled = false;
 
 
              }

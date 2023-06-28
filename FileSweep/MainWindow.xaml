@@ -80,6 +80,5 @@
             <Button Content="skip" HorizontalAlignment ="Center" Width="40"  Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Click="Skip_Click" Margin="0"/>
         </Grid>
         <Label Content="Label" HorizontalAlignment="Left" Margin="309,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>
-        <TextBox HorizontalAlignment="Left" Margin="28,10,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>
