@@ -8,17 +8,17 @@
         Title="MainWindow" Height="450" Width="800"
         Loaded="Window_loaded">
     <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions> 
-            <Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
 
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-     
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -30,9 +30,9 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <WPFLib:DirectFolder x:Name="SourceDirectory" Grid.Column="0" Grid.Row="0"/>
-            <WPFLib:DirectFolder x:Name="WorkDirectory" Grid.Column="0" Grid.Row="1"/>
-            <WPFLib:DirectFolder x:Name="TargetDirectory" Grid.Column="0" Grid.Row="2"/>
+            <WPFLib:DirectFolder Name="SourceDirectory" Grid.Column="0" Grid.Row="0"/>
+            <WPFLib:DirectFolder Name="WorkDirectory" Grid.Column="0" Grid.Row="1"/>
+            <WPFLib:DirectFolder Name="TargetDirectory" Grid.Column="0" Grid.Row="2"/>
             <CheckBox Name="keepDirectoryStructure" Grid.Row ="0" Grid.Column="1" Grid.ColumnSpan="2"  Content="keep Directory Structure" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3" IsChecked="True"/>
             <CheckBox Name="SubfolderFirst" Grid.Row ="1" Grid.Column="1"  Content="Subfolder First" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3" IsChecked="True"/>
             <CheckBox Name="Simulate" Grid.Row ="2" Grid.Column="1"  Content="Simulate" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3" IsChecked="True"/>
@@ -79,5 +79,7 @@
             <Button Content="push" HorizontalAlignment ="Left" Width="40"  Grid.Row="1" Grid.Column="1" Click="Push_Click" Margin="0"/>
             <Button Content="skip" HorizontalAlignment ="Center" Width="40"  Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Click="Skip_Click" Margin="0"/>
         </Grid>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="309,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>
+        <TextBox HorizontalAlignment="Left" Margin="28,10,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>

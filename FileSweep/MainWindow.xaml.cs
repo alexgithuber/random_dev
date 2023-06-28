@@ -232,6 +232,6 @@ namespace FileSweep
             window.KeyDown += ProcessKey;
         }
 
-        
+     
     }
 }
