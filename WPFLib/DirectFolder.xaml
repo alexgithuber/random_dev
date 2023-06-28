@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFLib"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="10">
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="10" IsManipulationEnabled="True">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -13,7 +13,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <TextBox Name="DC"  Grid.Column="0"   Text="{Binding Folder}" Margin="0,0,-1,0" />
+        <TextBox Name="DC2"  Grid.Column="0"   Text="" Margin="0,0,-1,0" TextChanged="DC_TextChanged" />
         <Button Name="DirectoryClick" Content="..."  Grid.Column="1" HorizontalAlignment="Center" Height="20" VerticalAlignment="Top" Click="ChooseDirectory" />
 
 

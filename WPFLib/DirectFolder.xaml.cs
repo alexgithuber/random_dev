@@ -1,6 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
-
+using System.Collections.ObjectModel;
 
 /// <summary>
 /// Interaction logic for UserControl1.xaml
@@ -11,8 +12,8 @@ namespace WPFLib
     {
         public DirectFolder()
         {
-            InitializeComponent();
             this.DataContext = this;
+            InitializeComponent();
             folder = this.Name;
         }
         private string folder;
@@ -21,10 +22,14 @@ namespace WPFLib
             get { return folder; }
             set
             {
-
+                folder = value;
+                DC2.Text = value;
+               
                 if (System.IO.Directory.Exists(value))
                 {
-                    folder = value;
+                    
+                   
+
                 }
             }
         }
@@ -40,6 +45,13 @@ namespace WPFLib
 
 
 
+        }
+
+        private void DC_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Console.WriteLine("textChanged");
+            e.Handled = true;
+        
         }
         //public string xFolder { Get; Set };
         /* private void OnDirectoryClick(object sender, RoutedEventArgs e)
