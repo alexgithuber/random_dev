@@ -11,8 +11,8 @@ using System.Threading;
 using System.Linq.Expressions;
 using System.Timers;
 using System.Configuration;
-
-namespace WpfApp1
+using WPFLib;
+namespace WinFileSort
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -28,18 +28,16 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+               this.DataContext = this;
 #if DEBUG
-                SourceDirectory.Text = @"C:\Users\alxhb\Desktop\wes2";
-                TargetDirectory.Text = @"C:\Users\alxhb\Desktop\wes";
-#endif
-          
+            SourceDirectory.Folder= @"C:\Users\alxhb\Desktop\wes2";
+            TargetDirectory.Folder= @"C:\Users\alxhb\Desktop\wes";
+           
 
-            var progress = new Progress<string>();
-            progress.ProgressChanged += (s, message) => {
-                tb1.AppendText(message);
-                //tb1.ScrollToEnd();
-            };
-            Console.SetOut(new ControlWriter(progress));
+#endif
+
+
+            Console.SetOut(new TextBoxConsole(tb1));
         }
 
 //}
@@ -48,15 +46,18 @@ namespace WpfApp1
   
         private async void BStart_Click(object sender, RoutedEventArgs e)
         {
-            timer=new System.Timers.Timer();
-            timer.AutoReset = true;
-            timer.Interval = 1000;
-            timer.Enabled = true;
+
+            timer = new System.Timers.Timer
+            {
+                AutoReset = true,
+                Interval = 1000,
+                Enabled = true
+            };
             timer.Elapsed += delegate (Object? source , ElapsedEventArgs ign) {
                 this.Dispatcher.Invoke(() =>
                 BStart.Content = String.Format("move {0}/{1}", Filer.countFile, Filer.totalFiles));  
             };
-            if (!(Directory.Exists(SourceDirectory.Text) && Directory.Exists(TargetDirectory.Text)))
+            if (!(Directory.Exists(SourceDirectory.Folder) && Directory.Exists(TargetDirectory.Folder)))
             {
                 Console.WriteLine("One or both directories do not exist");
                 return; }
@@ -68,8 +69,8 @@ namespace WpfApp1
                 bool kDS= keepDirectoryStructure.IsChecked.GetValueOrDefault();
                 bool bN= byName.IsChecked.GetValueOrDefault();
                 bool Sim= Simulation.IsChecked.GetValueOrDefault();
-                var sd = SourceDirectory.Text;
-                var td = TargetDirectory.Text;
+                var sd = SourceDirectory.Folder;
+                var td = TargetDirectory.Folder;
                     await Task.Run(() =>
                     {
                         try
@@ -94,66 +95,15 @@ namespace WpfApp1
         }
         private void BStop_Click(object sender, RoutedEventArgs e)
         {
-            
-            ct_source?.Cancel();
-   
+               ct_source?.Cancel();
         }
 
-        private void copy_log(object sender, RoutedEventArgs e)
+        private void CopyLog(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(tb1.Text);
+         
         }
-
-        private void SourceDirectoryB_Click(object sender, RoutedEventArgs e)
-        {
-                System.Windows.Forms.FolderBrowserDialog folder = new System.Windows.Forms.FolderBrowserDialog();
-                if (folder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    SourceDirectory.Text = folder.SelectedPath;
-                }
-          
-          //        ;
-            
-        }
-
-        private void TargetDirectoryB_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.FolderBrowserDialog folder = new System.Windows.Forms.FolderBrowserDialog();
-            if (folder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                TargetDirectory.Text = folder.SelectedPath;
-            }
-        }
-
-        
     }
 
-    public class ControlWriter : TextWriter
-    {
-        private IProgress<string> progress;
- 
-      
-        public ControlWriter(IProgress<string> progress)
-        {
-            this.progress = progress;
-     
-        }
-
-        public override void Write(char value)
-        {
-            progress.Report(value.ToString());
-        }
-
-        public override void Write(string? value)
-        {
-            if (value != null) {
-                progress.Report(value);
-            }
-        }
    
-        public override Encoding Encoding
-        {
-            get { return Encoding.ASCII; }
-        }
-    }
     }

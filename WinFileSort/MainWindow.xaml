@@ -1,0 +1,54 @@
+﻿<Window x:Class="WinFileSort.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:WPFLib="clr-namespace:WPFLib;assembly=WPFLib"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="545" Width="786">
+  
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--string SourceDirectory, 
+        string TargetDirectory, 
+        bool keepDirectoryStructure, 
+        bool byName, -->
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+               <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+
+            </Grid.ColumnDefinitions>
+
+            <WPFLib:DirectFolder x:Name="SourceDirectory" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Folder="SourceDirectory" Margin="3,3,-1,3" />
+            <WPFLib:DirectFolder x:Name="TargetDirectory" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Folder="TargetDirectory" Margin="3,3,-1,3" />
+            
+            <CheckBox Name="keepDirectoryStructure" Grid.Row ="0" Grid.Column="1" Grid.ColumnSpan="2"  Content="keep Directory Structure" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3" IsChecked="True"/>
+            <CheckBox  Name="byName" Grid.Row ="1" Grid.Column="1"  Content="by Name" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3" IsChecked="True"/>
+            <CheckBox  Name="Simulation" Grid.Row ="1" Grid.Column="2"  Content="Simulation" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3" IsChecked="True"/>
+
+            <Button Name="BStart" Content="Start" Grid.Row="0" Grid.RowSpan="1" Grid.Column="3" VerticalAlignment ="Stretch" HorizontalAlignment="Stretch" Margin="3" ButtonBase.Click="BStart_Click"/>
+
+            <Button Name="BStop" Content="Stop" Grid.Row="1" Grid.RowSpan="1" Grid.Column="3" VerticalAlignment ="Stretch" HorizontalAlignment="Stretch" Margin="3" ButtonBase.Click="BStop_Click"/>
+
+        </Grid>
+
+        <TextBox Name="tb1" Grid.Row="1" VerticalAlignment="Stretch"  AcceptsReturn="True" VerticalScrollBarVisibility="Visible"/>
+        <Button Content="Copy Log" Grid.Row="2"  VerticalAlignment ="Center" HorizontalAlignment="Center" Margin="3" Click="CopyLog"/>
+
+    </Grid>
+
+</Window>

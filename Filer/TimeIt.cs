@@ -7,19 +7,19 @@ using System.Globalization;
     public class TimeIt
     {
 
-        private static Stopwatch sw = new Stopwatch();
-        private static Stopwatch ew = new Stopwatch();
+        private static readonly Stopwatch sw = new();
+        private static readonly Stopwatch ew = new();
 
-        public static void tic()
+        public static void Tic()
         {
             sw.Restart();
         }
 
-        public static void toc()
+        public static void Toc()
         {
             Console.WriteLine(string.Format(NumberFormatInfo.InvariantInfo, "Elapsed time: {0}s", sw.Elapsed.TotalSeconds));// sw.Elapsed.TotalSeconds);
         }
-        public static bool elapsed(double minimumtime)
+        public static bool Elapsed(double minimumtime)
         {
             if (!ew.IsRunning)
             { ew.Restart(); }

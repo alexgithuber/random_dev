@@ -64,12 +64,32 @@
 
 
 
-           <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Label>Names</Label>
-        <TextBox Grid.Row="1" VerticalAlignment="Stretch" Name="tb1" AcceptsReturn="True" VerticalScrollBarVisibility="Visible"/>
-        <Button Content="Button" Grid.Row="0" VerticalAlignment ="Center" HorizontalAlignment="Center" Margin="3,3,3,3"/>
-        <Button Content="Button" Grid.Row="2" VerticalAlignment ="Center" HorizontalAlignment="Center" Margin="3,3,3,3"/>
+        
+     <Button Content="Copy Log" Grid.Row="2"  VerticalAlignment ="Center" HorizontalAlignment="Center" Margin="3" Click="copy_log"/>
+     
+
+     //<local:DirectFolder x:Name="SourceDirectory" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Folder="SourceDirectory" Margin="3,3,-1,3" />
+            //<local:DirectFolder x:Name="TargetDirectory" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Folder="TargetDirectory" Margin="3,3,-1,3" />
+
+
+
+             if (sender is not null)
+            {
+                Console.WriteLine("call from outside");
+              
+                Task.Run(() => { Stage_Click(null, null); });
+               
+
+                return;
+            }
+            else {
+                for (int i = 0; i < 3; i++)
+                {
+                    this.Dispatcher.Invoke(() => { Console.WriteLine("call from self"); });
+
+                    Thread.Sleep(300);
+                }
+                }
+
+
+

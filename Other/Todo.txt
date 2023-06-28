@@ -1,0 +1,19 @@
+1. Implement File Selector Technical
+	x. show preview
+	x. open / execute file		
+		List of Files as iterator 
+2.0 Define File Selector UI Done
+2.1 Implement File Seletctor UI
+get correct folder path for copy operation
+implement button binded copy operation
+ 
+	
+3. Test Test
+4. Setup PC2
+5. Gather new Link on PC1
+6. Prioritize LL on PC1
+7. Setup PC2
+8. Transfer LL and Tool to PC2
+9. Start Loading.
+10. Start Working with new tool.
+11. cm al

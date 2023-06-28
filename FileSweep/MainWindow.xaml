@@ -1,0 +1,83 @@
+﻿<Window x:Class="FileSweep.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:WPFLib="clr-namespace:WPFLib;assembly=WPFLib"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        Loaded="Window_loaded">
+    <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions> 
+            <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+     
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <WPFLib:DirectFolder x:Name="SourceDirectory" Grid.Column="0" Grid.Row="0"/>
+            <WPFLib:DirectFolder x:Name="WorkDirectory" Grid.Column="0" Grid.Row="1"/>
+            <WPFLib:DirectFolder x:Name="TargetDirectory" Grid.Column="0" Grid.Row="2"/>
+            <CheckBox Name="keepDirectoryStructure" Grid.Row ="0" Grid.Column="1" Grid.ColumnSpan="2"  Content="keep Directory Structure" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3" IsChecked="True"/>
+            <CheckBox Name="SubfolderFirst" Grid.Row ="1" Grid.Column="1"  Content="Subfolder First" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3" IsChecked="True"/>
+            <CheckBox Name="Simulate" Grid.Row ="2" Grid.Column="1"  Content="Simulate" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3" IsChecked="True"/>
+            <Button Name="Init" Grid.Row="1" Grid.RowSpan="1" Grid.Column="2" Content="Init" Margin="3" Click="Init_Click"/>
+            <Button Name="Last" Grid.Row="2" Grid.RowSpan="1" Grid.Column="2" Content="Last" Margin="3" Click="RevisitLastFile_Click"/>
+        </Grid>
+        <Border  Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="0.5" Margin="3">
+            <WPFLib:RMedia x:Name="me" Margin="3"/>
+        </Border>
+
+        <Grid Grid.Row="1" Grid.Column="1" IsManipulationEnabled="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBox Grid.Row="1" Name="FileName" Text="Filename:" Margin="1" IsReadOnly="True" />
+            <TextBox Grid.Row="0" Name="Folder" Text="Folder:" Margin="1" IsReadOnly="True" IsReadOnlyCaretVisible="True" />
+            <Label Grid.Row="2" Name="FileSize" Content="Size: kb"/>
+            <Label Grid.Row="3" Name="FileDate" Content="Date: dd.mm.yyyy hh:mm"/>
+            <TextBox Grid.Row="4" Name="tb1"  VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AllowDrop="False" IsReadOnly="True" />
+            <Button Grid.Row="5" Content="Copy Log"  VerticalAlignment ="Center" HorizontalAlignment="Center" Margin="3" Click="Copy_log"/>
+
+        </Grid>
+        <Grid HorizontalAlignment="Center" Grid.Row="2" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Button Content="stage" HorizontalAlignment="Center" Width="40" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Click="Stage_Click" Margin="0" />
+            <Button Content="delete" HorizontalAlignment="Right" Width="40" Grid.Row="1" Grid.Column="0" Click="Delete_Click" Margin="0"/>
+            <Button Content="push" HorizontalAlignment ="Left" Width="40"  Grid.Row="1" Grid.Column="1" Click="Push_Click" Margin="0"/>
+            <Button Content="skip" HorizontalAlignment ="Center" Width="40"  Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Click="Skip_Click" Margin="0"/>
+        </Grid>
+    </Grid>
+</Window>
